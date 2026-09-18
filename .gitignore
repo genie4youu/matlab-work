@@ -51,3 +51,5 @@ _덤프/
 _slprj/
 _덤프_독립/
 _덤프_*/
+build_diag_*.log
+update_diag_*.log

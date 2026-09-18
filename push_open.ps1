@@ -58,7 +58,7 @@ foreach ($e in $entries) {
     if (-not (Test-Path $from)) { $skipped += "$rel (없음)"; continue }
     if ((Get-Item $from).PSIsContainer) {
         # 폴더: 거울로 동기화(삭제 반영), .git·빌드 산출물·덤프 제외
-        $null = robocopy $from $to /MIR /XD .git slprj _덤프 _백업 /XF *.asv *.autosave *.slx.r* *.m~ /NFL /NDL /NJH /NJS /NP
+        $null = robocopy $from $to /MIR /XD .git slprj _slprj _덤프 _백업 /XF *.asv *.autosave *.slx.r* *.m~ build_diag_*.log update_diag_*.log /NFL /NDL /NJH /NJS /NP
         if ($LASTEXITCODE -ge 8) { throw "robocopy 실패($LASTEXITCODE): $rel" }
         $copied += "$rel\ (폴더)"
     } else {
