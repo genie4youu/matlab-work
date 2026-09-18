@@ -7,7 +7,7 @@
 %   출력 대조는 t = 0(st=1·err=0·outEn=0) 과 t = 1..N ms 의 st·err·outEn 전부.
 %   시험 표는 Esm_ruflo_사양.md §6 과 같다. 결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다.
 
-OUT = fileparts(mfilename('fullpath'));
+OUT = fileparts(fileparts(mfilename('fullpath')));
 MDL = 'Esm_ruflo';
 SLX = fullfile(OUT, [MDL '.slx']);
 
@@ -15,8 +15,8 @@ fprintf('\n==== test_Esm_ruflo ====\n');
 assert(isfolder(OUT), 'result folder not found: %s', OUT);
 cd(OUT);
 Simulink.fileGenControl('set', ...
-    'CacheFolder',   fullfile(OUT, '_slprj'), ...
-    'CodeGenFolder', fullfile(OUT, '_slprj'), 'createDir', true);
+    'CacheFolder',   fullfile(OUT, '_검증', '_slprj'), ...
+    'CodeGenFolder', fullfile(OUT, '_검증', '_slprj'), 'createDir', true);
 if ~bdIsLoaded(MDL)
     assert(isfile(SLX), 'Esm_ruflo.slx not found — run build_Esm_ruflo.m first');
     load_system(SLX);

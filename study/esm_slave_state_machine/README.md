@@ -11,30 +11,30 @@
 - 인터페이스 고정: Inport `req`(uint8)·`ack`(boolean), Outport `st`·`err`·`outEn`(= `st == 8`), 고정 스텝 1 ms. **t = 0 은 초기화 틱**(입력 무시, `st = 1`), k번째 입력은 t = k ms.
 - 틱 순서: ① `ack` → `err = 0` ② 요청 처리 ③ `outEn`.
 
-## 파일
+## 파일 — 맨 위는 결과물만
 
-| 파일 (× `_cur` `_ruflo` `_ecc`) | 내용 |
+| 결과물 (× `_cur` `_ruflo` `_ecc`) | 내용 |
 | --- | --- |
-| `build_Esm_<side>.m` | Stateflow API 로 `Esm_<side>.slx` 를 처음부터 재생성 |
-| `test_Esm_<side>.m` · `verify_Esm_<side>.m` | 각 체계가 만든 공개 시험(3)·검증(update · 덤프 · `compare_spec` · 이름 규칙) 스크립트 |
+| `Esm_<side>.slx` | 모델 (안의 모델 이름도 같다) |
+| `build_Esm_<side>.m` | Stateflow API 로 그 모델을 처음부터 재생성 |
 | `Esm_<side>_사양.md` | 전이표 형식 사양표(그 체계의 설계) |
-| `Esm_<side>.slx` | 모델 |
-| `채점_공개_<side>.md` · `채점_숨은_<side>.md` · `독립측정_<side>.json` | 검증 세션의 재채점·API 계수 기록 |
-| `build_Esm_ref.m` · `Esm_ref.slx` · `채점_숨은_ref.md` | 참조 모델(3/3 · 14/14, 가드를 뺀 오답 모델은 6/14 로 잡힘) |
 | `open_all.m` | 네 모델을 나란히 연다 |
-| `tests/` | 채점 도구 — `esm_ref.m`(규칙의 기준 구현) · `public_cases.m` · `gen_hidden.m`→`hidden_cases.mat`(숨은 14, 285틱) · `run_hidden.m`(`sim` 틱 대조) · `measure_esm.m` |
-| `figures/` | Chart 그림 — `*_원본.png`(각 체계 배치) · `*_전.png`/`*_후.png`(`layout_chart` 전/후) |
+
+| 보조 | 내용 |
+| --- | --- |
+| `_검증/` | 각 체계의 `test_*.m`(공개 시험 3) · `verify_*.m`(update · 덤프 · `compare_spec` · 이름 규칙) · 검증 세션의 재채점 기록(`채점_*.md` · `독립측정_*.json`) · 참조 모델 `build_Esm_ref.m`/`Esm_ref.slx`(3/3 · 14/14, 가드를 뺀 오답은 6/14) · `tests/`(기준 구현 `esm_ref.m` · `public_cases.m` · `gen_hidden.m`→`hidden_cases.mat` 숨은 14/285틱 · `run_hidden.m` · `measure_esm.m`). 덤프·캐시(`_덤프_*` · `_slprj`)도 여기 생긴다 |
+| `_그림/` | Chart 그림 — `*_원본.png`(각 체계 배치) · `*_전.png`/`*_후.png`(`layout_chart` 전/후) |
 
 ## 돌려 보기
 
 ```matlab
 cd <이 폴더>
-build_Esm_ruflo; test_Esm_ruflo                 % 한 체계 재생성 + 공개 시험
-addpath tests; run_hidden('Esm_ruflo.slx')     % 숨은 시험 — 14/14 이면 규칙과 같다
-open_all                                        % 넷 나란히
+build_Esm_ruflo; run('_검증/test_Esm_ruflo.m')          % 한 체계 재생성 + 공개 시험
+addpath _검증/tests; run_hidden('Esm_ruflo.slx')        % 숨은 시험 — 14/14 이면 규칙과 같다
+open_all                                                % 넷 나란히
 ```
 
-`verify_*.m` 은 `_shared/harness`(덤프·`compare_spec`)를 절대 경로로 `addpath` 한다 — 다른 PC 에서는 그 줄만 고친다. 각 스크립트의 출력 폴더는 자기 위치(`fileparts(mfilename('fullpath'))`).
+`verify_*.m` 은 `_shared/harness`(덤프·`compare_spec`)를 절대 경로로 `addpath` 한다 — 다른 PC 에서는 그 줄만 고친다. 결과물 스크립트의 출력 폴더는 자기 위치, `_검증/` 의 스크립트는 상위(작업 폴더).
 
 ## 결과 (검증 세션 재실행 값, 2026-09-18 새 이름으로 재확인)
 

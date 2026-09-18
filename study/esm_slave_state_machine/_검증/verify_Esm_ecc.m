@@ -7,11 +7,11 @@
 %       → 이름 규칙 수치 → _덤프\검증수치.md
 % 수용 시험은 test_Esm_ecc.m 이 따로 한다. 이 스크립트는 결과 폴더(OUT) 밖에 아무것도 쓰지 않는다.
 
-OUT   = fileparts(mfilename('fullpath'));
+OUT   = fileparts(fileparts(mfilename('fullpath')));
 MDL   = 'Esm_ecc';
 CHART = 'EsmChart';
 SLX   = fullfile(OUT, [MDL '.slx']);
-DUMP  = fullfile(OUT, '_덤프_ecc');
+DUMP  = fullfile(OUT, '_검증', '_덤프_ecc');
 SPEC  = fullfile(OUT, 'Esm_ecc_사양.md');
 NUM   = fullfile(DUMP, '검증수치.md');
 

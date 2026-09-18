@@ -9,11 +9,11 @@
 %   [4] 구조(금지 조건 F5) — Init 으로 가는 전이는 `[req == 1]`, 나머지는 `!err` 포함
 %   🔴 수치는 전부 이 스크립트가 센 값이다 → _덤프\검증수치.md. 결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다.
 
-OUT  = fileparts(mfilename('fullpath'));
+OUT  = fileparts(fileparts(mfilename('fullpath')));
 HARN = 'C:\Users\leeyj\matlab-work\_shared\harness';
 MDL  = 'Esm_ruflo';
 SLX  = fullfile(OUT, [MDL '.slx']);
-DUMP = fullfile(OUT, '_덤프_ruflo');
+DUMP = fullfile(OUT, '_검증', '_덤프_ruflo');
 SPEC = fullfile(OUT, 'Esm_ruflo_사양.md');
 
 fprintf('\n==== verify_Esm_ruflo ====\n');
@@ -22,8 +22,8 @@ assert(isfolder(HARN), 'harness not found: %s', HARN);
 cd(OUT);
 addpath(HARN, fullfile(HARN, 'build'));
 Simulink.fileGenControl('set', ...
-    'CacheFolder',   fullfile(OUT, '_slprj'), ...
-    'CodeGenFolder', fullfile(OUT, '_slprj'), 'createDir', true);
+    'CacheFolder',   fullfile(OUT, '_검증', '_slprj'), ...
+    'CodeGenFolder', fullfile(OUT, '_검증', '_slprj'), 'createDir', true);
 if ~isfolder(DUMP), mkdir(DUMP); end
 
 R = struct();

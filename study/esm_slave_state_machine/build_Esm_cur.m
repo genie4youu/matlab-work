@@ -18,8 +18,8 @@ fprintf('MATLAB %s | OUT = %s\n', version, OUT);
 assert(isfolder(OUT), 'result folder not found: %s', OUT);
 cd(OUT);
 Simulink.fileGenControl('set', ...
-    'CacheFolder',   fullfile(OUT, '_slprj'), ...
-    'CodeGenFolder', fullfile(OUT, '_slprj'), 'createDir', true);
+    'CacheFolder',   fullfile(OUT, '_검증', '_slprj'), ...
+    'CodeGenFolder', fullfile(OUT, '_검증', '_slprj'), 'createDir', true);
 
 % ── 0. 깨끗한 시작 ──────────────────────────────────────
 if bdIsLoaded(MDL), close_system(MDL, 0); end

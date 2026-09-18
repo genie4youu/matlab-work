@@ -6,7 +6,7 @@
 %   기대값은 Esm_cur_사양.md §6 과 같다. 금지 조건 F1~F6(§5) 도 같은 로그로 같이 잰다.
 %   결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다 — slprj 캐시는 OUT\_slprj.
 
-OUT = fileparts(mfilename('fullpath'));
+OUT = fileparts(fileparts(mfilename('fullpath')));
 MDL = 'Esm_cur';
 SLX = fullfile(OUT, [MDL '.slx']);
 
@@ -15,8 +15,8 @@ assert(isfolder(OUT), 'result folder not found: %s', OUT);
 assert(isfile(SLX), 'Esm_cur.slx not found — run build_Esm_cur.m first');
 cd(OUT);
 Simulink.fileGenControl('set', ...
-    'CacheFolder',   fullfile(OUT, '_slprj'), ...
-    'CodeGenFolder', fullfile(OUT, '_slprj'), 'createDir', true);
+    'CacheFolder',   fullfile(OUT, '_검증', '_slprj'), ...
+    'CodeGenFolder', fullfile(OUT, '_검증', '_slprj'), 'createDir', true);
 if ~bdIsLoaded(MDL), load_system(SLX); end
 
 % ── 공개 수용 시험 3개 (틱 1~N 의 입력과 기대 출력) ─────────

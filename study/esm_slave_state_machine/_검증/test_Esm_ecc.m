@@ -9,7 +9,7 @@
 % 덧붙여 사양표 §5 금지 조건 F1~F6 을 같은 실행의 전 틱에서 센다(통과 n/3 에는 넣지 않는다).
 % 이 스크립트는 결과 폴더(OUT) 밖에 아무것도 쓰지 않는다(slprj 는 fileGenControl 로 OUT 안).
 
-OUT = fileparts(mfilename('fullpath'));
+OUT = fileparts(fileparts(mfilename('fullpath')));
 MDL = 'Esm_ecc';
 SLX = fullfile(OUT, [MDL '.slx']);
 DT  = 0.001;

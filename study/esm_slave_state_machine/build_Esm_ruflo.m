@@ -27,8 +27,8 @@ fprintf('\n==== build_Esm_ruflo — MATLAB %s ====\n', version);
 assert(isfolder(OUT), 'result folder not found: %s', OUT);
 cd(OUT);
 Simulink.fileGenControl('set', ...
-    'CacheFolder',   fullfile(OUT, '_slprj'), ...
-    'CodeGenFolder', fullfile(OUT, '_slprj'), 'createDir', true);
+    'CacheFolder',   fullfile(OUT, '_검증', '_slprj'), ...
+    'CodeGenFolder', fullfile(OUT, '_검증', '_slprj'), 'createDir', true);
 
 if bdIsLoaded(MDL), close_system(MDL, 0); end
 if isfile(SLX), delete(SLX); fprintf('  old Esm_ruflo.slx deleted\n'); end

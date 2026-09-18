@@ -9,11 +9,11 @@
 %   결과: _덤프\검증수치.md  (수치는 전부 이 스크립트가 센 값)
 %   결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다.
 
-OUT  = fileparts(mfilename('fullpath'));
+OUT  = fileparts(fileparts(mfilename('fullpath')));
 HARN = 'C:\Users\leeyj\matlab-work\_shared\harness';
 MDL  = 'Esm_cur';
 SLX  = fullfile(OUT, [MDL '.slx']);
-DUMP = fullfile(OUT, '_덤프_cur');
+DUMP = fullfile(OUT, '_검증', '_덤프_cur');
 SPEC = fullfile(OUT, 'Esm_cur_사양.md');
 
 fprintf('\n==== verify_Esm_cur ====\n');
@@ -23,8 +23,8 @@ assert(isfile(SLX), 'Esm_cur.slx not found — run build_Esm_cur.m first');
 cd(OUT);
 addpath(HARN, fullfile(HARN, 'build'));
 Simulink.fileGenControl('set', ...
-    'CacheFolder',   fullfile(OUT, '_slprj'), ...
-    'CodeGenFolder', fullfile(OUT, '_slprj'), 'createDir', true);
+    'CacheFolder',   fullfile(OUT, '_검증', '_slprj'), ...
+    'CodeGenFolder', fullfile(OUT, '_검증', '_slprj'), 'createDir', true);
 
 R = struct();
 R.matlab = version;

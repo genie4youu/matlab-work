@@ -15,8 +15,8 @@ CHART = 'EsmChart';
 SLX   = fullfile(OUT, [MDL '.slx']);
 
 cd(OUT);
-Simulink.fileGenControl('set', 'CacheFolder', OUT, 'CodeGenFolder', OUT, 'createDir', true);
-DIAG = fullfile(OUT, 'build_diag_ecc.log');                          % 배치 모드의 Stateflow 파서·update 진단을 파일로
+Simulink.fileGenControl('set', 'CacheFolder', fullfile(OUT, '_검증'), 'CodeGenFolder', fullfile(OUT, '_검증'), 'createDir', true);
+DIAG = fullfile(OUT, '_검증', 'build_diag_ecc.log');                          % 배치 모드의 Stateflow 파서·update 진단을 파일로
 if isfile(DIAG), delete(DIAG); end                               % (diary 는 덧붙이므로 이번 실행분만 남긴다)
 sldiagviewer.diary(DIAG, 'UTF-8');
 fprintf('[build] %s  MATLAB %s\n', datestr(now, 'yyyy-mm-dd HH:MM:SS'), version);
