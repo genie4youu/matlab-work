@@ -1,18 +1,18 @@
-%% test_Esm.m — 공개 수용 시험 T1~T3 을 sim 으로 돌려 틱 단위로 대조한다. 「통과 n/3」 출력.
+%% test_Esm_cur.m — 공개 수용 시험 T1~T3 을 sim 으로 돌려 틱 단위로 대조한다. 「통과 n/3」 출력.
 %
-%   실행:  matlab -wait -nosplash -batch "run('<OUT>\test_Esm.m')" -logfile <OUT>\test.log
+%   실행:  matlab -wait -nosplash -batch "run('<OUT>\test_Esm_cur.m')" -logfile <OUT>\test.log
 %
 %   시험 입력은 t = 0 에 0 행(초기화 틱)을 앞에 붙여 k번째 틱을 t = k ms 에 넣는다.
-%   기대값은 Esm_사양.md §6 과 같다. 금지 조건 F1~F6(§5) 도 같은 로그로 같이 잰다.
+%   기대값은 Esm_cur_사양.md §6 과 같다. 금지 조건 F1~F6(§5) 도 같은 로그로 같이 잰다.
 %   결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다 — slprj 캐시는 OUT\_slprj.
 
 OUT = fileparts(mfilename('fullpath'));
-MDL = 'Esm';
+MDL = 'Esm_cur';
 SLX = fullfile(OUT, [MDL '.slx']);
 
-fprintf('\n==== test_Esm ====\n');
+fprintf('\n==== test_Esm_cur ====\n');
 assert(isfolder(OUT), 'result folder not found: %s', OUT);
-assert(isfile(SLX), 'Esm.slx not found — run build_Esm.m first');
+assert(isfile(SLX), 'Esm_cur.slx not found — run build_Esm_cur.m first');
 cd(OUT);
 Simulink.fileGenControl('set', ...
     'CacheFolder',   fullfile(OUT, '_slprj'), ...
@@ -70,7 +70,7 @@ for k = 1:numel(C)
 end
 
 fprintf('\n통과 %d/%d\n', nPass, numel(C));
-fprintf('==== test_Esm done ====\n');
+fprintf('==== test_Esm_cur done ====\n');
 
 % ══════════════════════════════════════════════════════════
 function c = mkcase(id, req, ack, st, err, outEn)

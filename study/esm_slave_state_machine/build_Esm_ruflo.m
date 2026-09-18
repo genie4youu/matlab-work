@@ -1,11 +1,11 @@
-%% build_Esm.m — Esm.slx 를 Stateflow API 로 처음부터 다시 만든다 (MATLAB R2025b)
+%% build_Esm_ruflo.m — Esm_ruflo.slx 를 Stateflow API 로 처음부터 다시 만든다 (MATLAB R2025b)
 %
-%   실행:  matlab -wait -nosplash -batch "run('<OUT>\build_Esm.m')" -logfile <OUT>\build.log
-%   이 스크립트 하나로 재생성된다(수동 편집 없음). 있던 Esm.slx 는 지우고 새로 만든다.
+%   실행:  matlab -wait -nosplash -batch "run('<OUT>\build_Esm_ruflo.m')" -logfile <OUT>\build.log
+%   이 스크립트 하나로 재생성된다(수동 편집 없음). 있던 Esm_ruflo.slx 는 지우고 새로 만든다.
 %   결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다 — Simulink 캐시(slprj)도 OUT\_slprj 로 돌린다.
 %
 %   대상  : EtherCAT 슬레이브 AL 상태기(ETG.1000.6) 네 상태 Init(1)·PreOp(2)·SafeOp(4)·Op(8)
-%           + 이 과제가 정한 오류 표시(err)/해제(ack) 규칙. 정본은 Esm_사양.md
+%           + 이 과제가 정한 오류 표시(err)/해제(ack) 규칙. 정본은 Esm_ruflo_사양.md
 %   틱 순서(정본): ① ack → err=0   ② 요청: 허용 전이면 st=req, 그 밖(req≠0·req≠st)이면 err=1,
 %                  err 중에는 req==1 만 받는다   ③ outEn = (st == 8)
 %   Stateflow 실행 순서로 옮긴 것:
@@ -19,11 +19,11 @@
 %   이름 규칙: 데이터·이벤트 ≤ 8자 · State ≤ 12자 · 라벨 한 줄 ≤ 40자
 
 OUT = fileparts(mfilename('fullpath'));
-MDL = 'Esm';
+MDL = 'Esm_ruflo';
 SLX = fullfile(OUT, [MDL '.slx']);
 TS  = '0.001';                                   % 1 ms 고정 스텝
 
-fprintf('\n==== build_Esm — MATLAB %s ====\n', version);
+fprintf('\n==== build_Esm_ruflo — MATLAB %s ====\n', version);
 assert(isfolder(OUT), 'result folder not found: %s', OUT);
 cd(OUT);
 Simulink.fileGenControl('set', ...
@@ -31,7 +31,7 @@ Simulink.fileGenControl('set', ...
     'CodeGenFolder', fullfile(OUT, '_slprj'), 'createDir', true);
 
 if bdIsLoaded(MDL), close_system(MDL, 0); end
-if isfile(SLX), delete(SLX); fprintf('  old Esm.slx deleted\n'); end
+if isfile(SLX), delete(SLX); fprintf('  old Esm_ruflo.slx deleted\n'); end
 
 % ── 1. 모델 + Chart 블록 ──────────────────────────────────────────────
 new_system(MDL);
@@ -168,7 +168,7 @@ save_system(MDL, SLX);
 nDef = sum(arrayfun(@(t) isempty(t.Source), allT));
 fprintf('  saved %s\n', SLX);
 fprintf('  State %d · Transition %d (default %d) · Data %d\n', numel(allS), numel(allT), nDef, numel(allD));
-fprintf('==== build_Esm done ====\n');
+fprintf('==== build_Esm_ruflo done ====\n');
 
 % ══════════════════════════════════════════════════════════════════════
 function d = D(ch, name, scope, type)

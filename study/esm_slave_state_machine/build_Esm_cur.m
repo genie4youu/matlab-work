@@ -1,19 +1,19 @@
-%% build_Esm.m — Esm.slx 를 Stateflow API 로 처음부터 다시 만든다
+%% build_Esm_cur.m — Esm_cur.slx 를 Stateflow API 로 처음부터 다시 만든다
 %
-%   실행:  matlab -wait -nosplash -batch "run('<OUT>\build_Esm.m')" -logfile <OUT>\build.log
+%   실행:  matlab -wait -nosplash -batch "run('<OUT>\build_Esm_cur.m')" -logfile <OUT>\build.log
 %
-%   정본은 Esm_사양.md 다. 이 스크립트는 그 사양표를 구현하며, 수동 편집 없이
-%   이 파일만으로 Esm.slx 가 재생성된다. 기존 Esm.slx 가 있으면 지우고 만든다.
+%   정본은 Esm_cur_사양.md 다. 이 스크립트는 그 사양표를 구현하며, 수동 편집 없이
+%   이 파일만으로 Esm_cur.slx 가 재생성된다. 기존 Esm_cur.slx 가 있으면 지우고 만든다.
 %   결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다 — slprj 캐시도 OUT\_slprj 로 보낸다.
 %
 %   공개 출처: ETG.1000.6 AL 상태기 — Init(1) · Pre-Operational(2) ·
 %   Safe-Operational(4) · Operational(8). 오류 표시/해제 규칙은 과제 정의(사양표 §4).
 
 OUT = fileparts(mfilename('fullpath'));
-MDL = 'Esm';
+MDL = 'Esm_cur';
 SLX = fullfile(OUT, [MDL '.slx']);
 
-fprintf('\n==== build_Esm ====\n');
+fprintf('\n==== build_Esm_cur ====\n');
 fprintf('MATLAB %s | OUT = %s\n', version, OUT);
 assert(isfolder(OUT), 'result folder not found: %s', OUT);
 cd(OUT);
@@ -130,7 +130,7 @@ nJ = numel(ch.find('-isa','Stateflow.Junction'));
 nD = numel(ch.find('-isa','Stateflow.Data'));
 fprintf('saved %s\n  State %d  Transition %d  Junction %d  Data %d\n', SLX, nS, nT, nJ, nD);
 close_system(MDL, 0);
-fprintf('==== build_Esm done ====\n');
+fprintf('==== build_Esm_cur done ====\n');
 
 % ══════════════════════════════════════════════════════════
 function d = mkdata(ch, name, scope, type, port, init)

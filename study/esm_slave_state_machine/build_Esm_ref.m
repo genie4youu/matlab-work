@@ -1,6 +1,6 @@
 % build_check — 검증 세션의 하네스 자가검사용 Esm 모델 (채점 대상 아님)
 here = fileparts(mfilename('fullpath'));
-MDL = 'Esm'; bdclose('all');
+MDL = 'Esm_ref'; bdclose('all');
 Simulink.fileGenControl('set', 'CacheFolder', fullfile(here, '_slprj'), 'CodeGenFolder', fullfile(here, '_slprj'), 'createDir', true);
 new_system(MDL); load_system(MDL);
 set_param(MDL, 'SolverType', 'Fixed-step', 'Solver', 'FixedStepDiscrete', 'FixedStep', '0.001', 'StopTime', '0.02');

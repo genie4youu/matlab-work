@@ -1,11 +1,11 @@
 # 사양표 — Esm
 
-- 대상: `Esm`
+- 대상: `Esm_ruflo`
 - 형식: [[work/knowledge/볼트운영/모델저작_규칙]] §2 — `emit_transtable` 의 전이표와 같은 절·표 + 사양 전용 절(§0 인터페이스 · §5 금지 조건 · §6 수용 시험)
 - 출처: ETG.1000.6 AL 상태기의 네 상태 Init(1) · Pre-Operational(2) · Safe-Operational(4) · Operational(8) 와 허용 전이 1→2 · 2→1 · 2→4 · 4→1 · 4→2 · 4→8 · 8→1 · 8→2 · 8→4. 오류 표시(`err`)/해제(`ack`) 규칙은 이 과제(2026-09-17)가 정한 것이다
 - 모델 밖: Bootstrap(3) · AL Status Code · 상태별 SM/PDO 설정 검사 — 요청 코드의 합법성만 본다
 
-> 🔴 Private. 이 표가 **정본**이고 `Esm.slx` 는 구현이다. 어긋나면 모델이 틀린 것. 표 칸 안의 `|` 는 `\|` 로 쓴다.
+>  Private. 이 표가 **정본**이고 `Esm_ruflo.slx` 는 구현이다. 어긋나면 모델이 틀린 것. 표 칸 안의 `|` 는 `\|` 로 쓴다.
 
 ## 0. 인터페이스
 
@@ -26,7 +26,7 @@
 - Stateflow 로 옮긴 순서: 부모 `Al` 의 `during`(① `err = err && !ack;`) → 자식의 outgoing 전이(② 허용 전이 9개 = 전이표 전부) → 전이가 없으면 자식의 `during`(② 그 밖 → `err = err || (req != 0 && req != 자기코드);` — err 중 무시되는 요청도 여기 잡히나 err 는 이미 1 이라 관측이 같다) → `outEn` 은 `Op` 의 entry/exit(③).
 - C 액션 언어는 State Action 안의 `if { }` 를 받지 않으므로(Syntax error) 분기는 전부 불리언 식이다.
 
-## 1. `Esm/Esm`
+## 1. `Esm_ruflo/Esm_ruflo`
 
 ### 1.1 Chart
 
@@ -130,7 +130,7 @@ err = err || (req != 0 && req != 4);
 
 ## 6. 수용 시험
 
-> 각 틱 뒤의 기대 출력. k번째 틱은 t = k ms 에 넣고 그 틱의 출력은 t = k ms 값이다. t = 0 은 `st = 1 · err = 0 · outEn = 0`. `test_Esm.m` 이 `sim` 으로 돌려 틱 단위로 대조하고 `통과 n/3` 을 낸다.
+> 각 틱 뒤의 기대 출력. k번째 틱은 t = k ms 에 넣고 그 틱의 출력은 t = k ms 값이다. t = 0 은 `st = 1 · err = 0 · outEn = 0`. `test_Esm_ruflo.m` 이 `sim` 으로 돌려 틱 단위로 대조하고 `통과 n/3` 을 낸다.
 
 | # | 입력 시퀀스 | 기대 출력/State |
 | --- | --- | --- |

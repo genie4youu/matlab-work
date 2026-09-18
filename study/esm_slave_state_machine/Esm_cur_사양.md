@@ -6,7 +6,7 @@ updated: 2026-09-17
 ---
 
 # 사양표 — Esm
-- 대상: `Esm`
+- 대상: `Esm_cur`
 - 공개 출처: ETG.1000.6 AL 상태기 — Init(1) · Pre-Operational(2) · Safe-Operational(4) · Operational(8). Bootstrap(3) 은 과제 범위 밖.
 - 오류 표시/해제 규칙: 과제 정의(§4 틱 규칙)가 정본. ETG 의 AL Status Code 는 다루지 않고 `err` 한 비트로 줄였다.
 - 형식: 모델저작_규칙 §2 (전이표와 같은 절·표 + §0 인터페이스 · §5 금지 조건 · §6 수용 시험)
@@ -22,9 +22,9 @@ updated: 2026-09-17
 | `err` | Output | boolean | 초기 false | 오류 표시. 불법 요청에 true, `ack` 에 false. 허용 전이는 건드리지 않는다 |
 | `outEn` | Output | boolean | `st == 8` | 출력 활성. Operational 에서만 true |
 
-고정 스텝 이산, 스텝 1 ms. 모델 루트 Inport `req`·`ack`, Outport `st`·`err`·`outEn`. Chart 는 `Esm/Esm` 하나.
+고정 스텝 이산, 스텝 1 ms. 모델 루트 Inport `req`·`ack`, Outport `st`·`err`·`outEn`. Chart 는 `Esm_cur/Esm` 하나.
 
-## 1. `Esm/Esm`
+## 1. `Esm_cur/Esm`
 
 ### 1.1 Chart
 
@@ -140,7 +140,7 @@ Stateflow 실행 순서로 옮긴 방법 — 활성 State 하나는 「outer tra
 
 | # | 문장 | 검사 방법 |
 | --- | --- | --- |
-| F1 | `outEn` 이 true 인 틱은 `st == 8` 인 틱과 정확히 같다 | 시뮬레이션 로그 전 틱에서 `all(outEn == (st == 8))`. `test_Esm.m` T1~T3 |
+| F1 | `outEn` 이 true 인 틱은 `st == 8` 인 틱과 정확히 같다 | 시뮬레이션 로그 전 틱에서 `all(outEn == (st == 8))`. `test_Esm_cur.m` T1~T3 |
 | F2 | `st` 는 1 · 2 · 4 · 8 밖의 값을 갖지 않는다 | 로그에서 `all(ismember(st, [1 2 4 8]))`. T1~T3 |
 | F3 | `st` 의 변화는 허용 전이 9쌍 밖으로 일어나지 않는다(1→4 · 1→8 · 2→8 없음) | 로그의 연속 쌍 `(st(k-1), st(k))` 중 값이 바뀐 것이 전부 ETG 9쌍 안. T1~T3 |
 | F4 | `err` 가 true 인 채로(같은 틱에 `ack` 없이) `st` 가 바뀌면 그 목적지는 1(Init) 뿐이다 — 오류 중에는 Init 요청만 받는다 | 로그에서 `err(k-1) && ~ack(k) && st(k) ~= st(k-1)` 인 k 는 전부 `st(k) == 1`. T3 틱 4 |
@@ -161,4 +161,4 @@ Stateflow 실행 순서로 옮긴 방법 — 활성 State 하나는 「outer tra
 모서리 — T1 틱 4·5(유지되는 `req = 8`, 재트리거 없음) · T2 틱 1·2(불법 뒤 `req = 0` 유지, `err` 유지) · T3 틱 3(오류 중 허용 요청 4 무시) · T3 틱 4(오류 중 Init 요청은 받되 `err` 유지) · T3 틱 5(같은 틱의 `ack` + 요청 2 → 해제 뒤 전이).
 
 ---
-🔗 `build_Esm.m`(구현) · `test_Esm.m`(수용 시험) · `verify_Esm.m`(update · 덤프 · 대조 · 이름 규칙) · `_덤프/사양대조.md`
+🔗 `build_Esm_cur.m`(구현) · `test_Esm_cur.m`(수용 시험) · `verify_Esm_cur.m`(update · 덤프 · 대조 · 이름 규칙) · `_덤프/사양대조.md`

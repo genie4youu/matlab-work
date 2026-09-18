@@ -50,3 +50,4 @@ _덤프/
 # 결과 폴더 안 Simulink 캐시 (build 스크립트가 fileGenControl 로 두는 것, 2026-09-18)
 _slprj/
 _덤프_독립/
+_덤프_*/

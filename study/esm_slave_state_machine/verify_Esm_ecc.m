@@ -1,18 +1,18 @@
-% verify_Esm.m — Esm.slx 의 기계 검증(관문 3) + 이름 규칙 수치.
+% verify_Esm_ecc.m — Esm_ecc.slx 의 기계 검증(관문 3) + 이름 규칙 수치.
 %
 % 실행:
-%   matlab -wait -nosplash -batch "run('C:\Users\leeyj\Documents\yj.lee\ecc\회차\2026-09-17_esm_간단_재대결\verify_Esm.m')" -logfile ...\verify.log
+%   matlab -wait -nosplash -batch "run('C:\Users\leeyj\Documents\yj.lee\ecc\회차\2026-09-17_esm_간단_재대결\verify_Esm_ecc.m')" -logfile ...\verify.log
 %
 % 순서: load_system → update → emit_dump → emit_transtable → compare_spec → §0 인터페이스 대조
 %       → 이름 규칙 수치 → _덤프\검증수치.md
-% 수용 시험은 test_Esm.m 이 따로 한다. 이 스크립트는 결과 폴더(OUT) 밖에 아무것도 쓰지 않는다.
+% 수용 시험은 test_Esm_ecc.m 이 따로 한다. 이 스크립트는 결과 폴더(OUT) 밖에 아무것도 쓰지 않는다.
 
 OUT   = fileparts(mfilename('fullpath'));
-MDL   = 'Esm';
+MDL   = 'Esm_ecc';
 CHART = 'EsmChart';
 SLX   = fullfile(OUT, [MDL '.slx']);
-DUMP  = fullfile(OUT, '_덤프');
-SPEC  = fullfile(OUT, 'Esm_사양.md');
+DUMP  = fullfile(OUT, '_덤프_ecc');
+SPEC  = fullfile(OUT, 'Esm_ecc_사양.md');
 NUM   = fullfile(DUMP, '검증수치.md');
 
 addpath('C:\Users\leeyj\matlab-work\_shared\harness');
@@ -33,7 +33,7 @@ load_system(SLX);
 set_param(MDL, 'SimulationCommand', 'update');
 fprintf('[verify] update ok\n');
 L{end+1} = '## 1. 열기·갱신';
-L{end+1} = '- `load_system` + `set_param(''Esm'',''SimulationCommand'',''update'')`: 오류 없음';
+L{end+1} = '- `load_system` + `set_param(''Esm_ecc'',''SimulationCommand'',''update'')`: 오류 없음';
 L{end+1} = '';
 
 %% 2. 덤프 · 전이표 · 사양 대조

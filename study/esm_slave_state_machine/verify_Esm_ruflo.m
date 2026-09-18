@@ -1,22 +1,22 @@
-%% verify_Esm.m — Esm.slx 의 완료 조건을 기계로 재고 _덤프\ 에 산출물을 낸다
+%% verify_Esm_ruflo.m — Esm_ruflo.slx 의 완료 조건을 기계로 재고 _덤프\ 에 산출물을 낸다
 %
-%   실행: build_Esm.m 다음, test_Esm.m 앞에.
-%     matlab -wait -nosplash -batch "run('<OUT>\build_Esm.m'); run('<OUT>\verify_Esm.m'); run('<OUT>\test_Esm.m')" -logfile <OUT>\build.log
+%   실행: build_Esm_ruflo.m 다음, test_Esm_ruflo.m 앞에.
+%     matlab -wait -nosplash -batch "run('<OUT>\build_Esm_ruflo.m'); run('<OUT>\verify_Esm_ruflo.m'); run('<OUT>\test_Esm_ruflo.m')" -logfile <OUT>\build.log
 %
-%   [1] Esm.slx 열기 + set_param(...,'SimulationCommand','update')
-%   [2] emit_dump → emit_transtable → compare_spec(Esm_사양.md)      — 하네스 _shared\harness(+build)
+%   [1] Esm_ruflo.slx 열기 + set_param(...,'SimulationCommand','update')
+%   [2] emit_dump → emit_transtable → compare_spec(Esm_ruflo_사양.md)      — 하네스 _shared\harness(+build)
 %   [3] 이름 규칙 — 덤프 JSON 에서 State 이름 ≤ 12 · 데이터/이벤트 ≤ 8 · 라벨 한 줄 ≤ 40
 %   [4] 구조(금지 조건 F5) — Init 으로 가는 전이는 `[req == 1]`, 나머지는 `!err` 포함
 %   🔴 수치는 전부 이 스크립트가 센 값이다 → _덤프\검증수치.md. 결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다.
 
 OUT  = fileparts(mfilename('fullpath'));
 HARN = 'C:\Users\leeyj\matlab-work\_shared\harness';
-MDL  = 'Esm';
+MDL  = 'Esm_ruflo';
 SLX  = fullfile(OUT, [MDL '.slx']);
-DUMP = fullfile(OUT, '_덤프');
-SPEC = fullfile(OUT, 'Esm_사양.md');
+DUMP = fullfile(OUT, '_덤프_ruflo');
+SPEC = fullfile(OUT, 'Esm_ruflo_사양.md');
 
-fprintf('\n==== verify_Esm ====\n');
+fprintf('\n==== verify_Esm_ruflo ====\n');
 assert(isfolder(OUT),  'result folder not found: %s', OUT);
 assert(isfolder(HARN), 'harness not found: %s', HARN);
 cd(OUT);
@@ -32,9 +32,9 @@ R.when   = char(datetime('now', 'Format', 'yyyy-MM-dd HH:mm:ss'));
 
 % ── [1] 열기 + update ────────────────────────────────────────────────
 if bdIsLoaded(MDL), close_system(MDL, 0); end
-assert(isfile(SLX), 'Esm.slx not found — run build_Esm.m first');
+assert(isfile(SLX), 'Esm_ruflo.slx not found — run build_Esm_ruflo.m first');
 load_system(SLX);
-diagLog = fullfile(DUMP, 'update_diag.log');          % 진단 뷰어 내용(오류 원문)을 파일로
+diagLog = fullfile(DUMP, 'update_diag_ruflo.log');          % 진단 뷰어 내용(오류 원문)을 파일로
 if isfile(diagLog), delete(diagLog); end
 sldiagviewer.diary(diagLog);  sldiagviewer.diary('on');
 try
@@ -110,10 +110,10 @@ fprintf('[4] 전이 %d (default %d) · Init 행 %d개 · F5=%d\n', R.struct.nTra
 % ── [5] 결과 파일 ────────────────────────────────────────────────────
 mf = fullfile(DUMP, '검증수치.md');
 fid = fopen(mf, 'w', 'n', 'UTF-8');
-fprintf(fid, '# 검증 수치 — verify_Esm.m 이 센 값\n\n- 생성: %s · MATLAB %s\n- 모델: `%s`\n\n', R.when, R.matlab, SLX);
-fprintf(fid, '> 🔴 이 파일의 수는 전부 스크립트가 센 것이다. 수용 시험 결과는 `build.log` 의 test_Esm 출력이 정본이다.\n\n');
+fprintf(fid, '# 검증 수치 — verify_Esm_ruflo.m 이 센 값\n\n- 생성: %s · MATLAB %s\n- 모델: `%s`\n\n', R.when, R.matlab, SLX);
+fprintf(fid, '> 🔴 이 파일의 수는 전부 스크립트가 센 것이다. 수용 시험 결과는 `build.log` 의 test_Esm_ruflo 출력이 정본이다.\n\n');
 fprintf(fid, '| 항목 | 값 |\n| --- | --- |\n');
-fprintf(fid, '| `set_param(''Esm'',''SimulationCommand'',''update'')` | **%s** |\n', R.update);
+fprintf(fid, '| `set_param(''Esm_ruflo'',''SimulationCommand'',''update'')` | **%s** |\n', R.update);
 fprintf(fid, '| compare_spec 합계 | **%d** → %s |\n', R.compare.total, tern(R.compare.ok, '통과', '실패'));
 fprintf(fid, '| State / 전이 / default (사양/덤프) | %s / %s / %s |\n', R.compare.states, R.compare.trans, R.compare.defaults);
 fprintf(fid, '| 빠짐 / 남음 / 불일치 | %d / %d / %d |\n', R.compare.missing, R.compare.extra, R.compare.mismatch);
@@ -125,7 +125,7 @@ fprintf(fid, '| Input / Output 데이터 | %s / %s |\n', strjoin(R.names.inputs,
 fprintf(fid, '| F5 (Init 행 전이 `[req == 1]`, 나머지 `!err`) | %d (Init 행 %d개 / 전이 %d개) |\n', R.struct.F5, R.struct.nToInit, R.struct.nTrans);
 fclose(fid);
 fprintf('  → %s\n', mf);
-fprintf('==== verify_Esm done: update=%s compare=%d names=%s ====\n', R.update, R.compare.total, tern(R.names.ok, 'ok', 'FAIL'));
+fprintf('==== verify_Esm_ruflo done: update=%s compare=%d names=%s ====\n', R.update, R.compare.total, tern(R.names.ok, 'ok', 'FAIL'));
 
 % ══════════════════════════════════════════════════════════════════════
 function S = readjson(p)

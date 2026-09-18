@@ -1,22 +1,22 @@
-% build_Esm.m — Esm.slx 를 Stateflow API 로 처음부터 다시 만든다 (R2025b). 수동 편집 없음.
+% build_Esm_ecc.m — Esm_ecc.slx 를 Stateflow API 로 처음부터 다시 만든다 (R2025b). 수동 편집 없음.
 %
 % 실행:
-%   matlab -wait -nosplash -batch "run('C:\Users\leeyj\Documents\yj.lee\ecc\회차\2026-09-17_esm_간단_재대결\build_Esm.m')" -logfile ...\build.log
+%   matlab -wait -nosplash -batch "run('C:\Users\leeyj\Documents\yj.lee\ecc\회차\2026-09-17_esm_간단_재대결\build_Esm_ecc.m')" -logfile ...\build.log
 %
 % 대상: EtherCAT 슬레이브 상태기(ESM) — ETG.1000.6 AL 상태기의 네 상태 Init(1)·PreOp(2)·SafeOp(4)·Op(8)
-%       + 과제가 정한 오류 표시/해제 규칙. 사양은 Esm_사양.md 가 정본이다.
+%       + 과제가 정한 오류 표시/해제 규칙. 사양은 Esm_ecc_사양.md 가 정본이다.
 % 구조: 부모 State `Al` 의 during 이 규칙 1(ack → err 해제)을 자식 전이(규칙 2)보다 먼저 실행한다.
 % 이름 규칙: 데이터·이벤트 ≤ 8자, State ≤ 12자, 라벨 한 줄 ≤ 40자.
 % 이 스크립트는 결과 폴더(OUT) 밖에 아무것도 쓰지 않는다(slprj 는 fileGenControl 로 OUT 안).
 
 OUT   = fileparts(mfilename('fullpath'));
-MDL   = 'Esm';
+MDL   = 'Esm_ecc';
 CHART = 'EsmChart';
 SLX   = fullfile(OUT, [MDL '.slx']);
 
 cd(OUT);
 Simulink.fileGenControl('set', 'CacheFolder', OUT, 'CodeGenFolder', OUT, 'createDir', true);
-DIAG = fullfile(OUT, 'build_diag.log');                          % 배치 모드의 Stateflow 파서·update 진단을 파일로
+DIAG = fullfile(OUT, 'build_diag_ecc.log');                          % 배치 모드의 Stateflow 파서·update 진단을 파일로
 if isfile(DIAG), delete(DIAG); end                               % (diary 는 덧붙이므로 이번 실행분만 남긴다)
 sldiagviewer.diary(DIAG, 'UTF-8');
 fprintf('[build] %s  MATLAB %s\n', datestr(now, 'yyyy-mm-dd HH:MM:SS'), version);

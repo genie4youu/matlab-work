@@ -1,7 +1,7 @@
-% test_Esm.m — Esm.slx 의 공개 수용 시험 3개를 sim 으로 돌려 틱 단위로 대조하고 `통과 n/3` 을 출력한다.
+% test_Esm_ecc.m — Esm_ecc.slx 의 공개 수용 시험 3개를 sim 으로 돌려 틱 단위로 대조하고 `통과 n/3` 을 출력한다.
 %
 % 실행:
-%   matlab -wait -nosplash -batch "run('C:\Users\leeyj\Documents\yj.lee\ecc\회차\2026-09-17_esm_간단_재대결\test_Esm.m')" -logfile ...\test.log
+%   matlab -wait -nosplash -batch "run('C:\Users\leeyj\Documents\yj.lee\ecc\회차\2026-09-17_esm_간단_재대결\test_Esm_ecc.m')" -logfile ...\test.log
 %
 % 시간 규약: t = 0 은 초기화 틱(입력 무시, st=1·err=0·outEn=0). 시험 입력의 k번째 틱은 t = k ms 에 들어가고
 %            그 틱의 출력은 t = k ms 값이다. 그래서 입력 앞에 t = 0 의 0 행을 붙인다.
@@ -10,7 +10,7 @@
 % 이 스크립트는 결과 폴더(OUT) 밖에 아무것도 쓰지 않는다(slprj 는 fileGenControl 로 OUT 안).
 
 OUT = fileparts(mfilename('fullpath'));
-MDL = 'Esm';
+MDL = 'Esm_ecc';
 SLX = fullfile(OUT, [MDL '.slx']);
 DT  = 0.001;
 

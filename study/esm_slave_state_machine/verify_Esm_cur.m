@@ -1,25 +1,25 @@
-%% verify_Esm.m — Esm.slx 의 완료 조건을 기계로 잰다 (update · 덤프 · 전이표 · 사양 대조 · 이름 규칙)
+%% verify_Esm_cur.m — Esm_cur.slx 의 완료 조건을 기계로 잰다 (update · 덤프 · 전이표 · 사양 대조 · 이름 규칙)
 %
-%   실행:  build_Esm.m 다음에.
-%          matlab -wait -nosplash -batch "run('<OUT>\verify_Esm.m')" -logfile <OUT>\verify.log
+%   실행:  build_Esm_cur.m 다음에.
+%          matlab -wait -nosplash -batch "run('<OUT>\verify_Esm_cur.m')" -logfile <OUT>\verify.log
 %
-%   [1] Esm.slx 열기 + set_param(...,'SimulationCommand','update')
-%   [2] emit_dump → emit_transtable → compare_spec(Esm_사양.md)   (하네스 _shared\harness + build)
+%   [1] Esm_cur.slx 열기 + set_param(...,'SimulationCommand','update')
+%   [2] emit_dump → emit_transtable → compare_spec(Esm_cur_사양.md)   (하네스 _shared\harness + build)
 %   [3] 이름 규칙 — 덤프 JSON 에서 State ≤ 12 · 데이터/이벤트 ≤ 8 · 라벨 한 줄 ≤ 40
 %   결과: _덤프\검증수치.md  (수치는 전부 이 스크립트가 센 값)
 %   결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다.
 
 OUT  = fileparts(mfilename('fullpath'));
 HARN = 'C:\Users\leeyj\matlab-work\_shared\harness';
-MDL  = 'Esm';
+MDL  = 'Esm_cur';
 SLX  = fullfile(OUT, [MDL '.slx']);
-DUMP = fullfile(OUT, '_덤프');
-SPEC = fullfile(OUT, 'Esm_사양.md');
+DUMP = fullfile(OUT, '_덤프_cur');
+SPEC = fullfile(OUT, 'Esm_cur_사양.md');
 
-fprintf('\n==== verify_Esm ====\n');
+fprintf('\n==== verify_Esm_cur ====\n');
 assert(isfolder(OUT), 'result folder not found: %s', OUT);
 assert(isfolder(HARN), 'harness not found: %s', HARN);
-assert(isfile(SLX), 'Esm.slx not found — run build_Esm.m first');
+assert(isfile(SLX), 'Esm_cur.slx not found — run build_Esm_cur.m first');
 cd(OUT);
 addpath(HARN, fullfile(HARN, 'build'));
 Simulink.fileGenControl('set', ...
@@ -122,7 +122,7 @@ mf = fullfile(DUMP, '검증수치.md');
 writemd(mf, R, meta);
 fprintf('  → %s\n', mf);
 close_system(MDL, 0);
-fprintf('==== verify_Esm done: update=%s compare=%d names=%d/%d/%d ====\n', R.update, R.compare.total, ...
+fprintf('==== verify_Esm_cur done: update=%s compare=%d names=%d/%d/%d ====\n', R.update, R.compare.total, ...
     R.names.rule.state_le_12, R.names.rule.data_le_8, R.names.rule.line_le_40);
 
 % ══════════════════════════════════════════════════════════
@@ -139,10 +139,10 @@ end
 function writemd(mf, R, meta)
     fid = fopen(mf, 'w', 'n', 'UTF-8'); oc = onCleanup(@() fclose(fid)); %#ok<NASGU>
     p = @(varargin) fprintf(fid, varargin{:});
-    p('# 검증 수치 — verify_Esm.m 이 센 값\n\n');
-    p('- 생성: %s · MATLAB %s\n- 모델: `Esm.slx`\n- 덤프 수집: %s\n\n', R.when, R.matlab, meta.collected);
-    p('> 🔴 이 파일의 수는 전부 스크립트가 센 것이다. 수용 시험 결과는 `test_Esm.m` 의 출력(실행 로그 `build.log` 의 `==== test_Esm ====` 절)이 정본이다.\n\n');
-    p('## 1. 열기 + update\n\n- `set_param(''Esm'',''SimulationCommand'',''update'')` → **%s**\n\n', R.update);
+    p('# 검증 수치 — verify_Esm_cur.m 이 센 값\n\n');
+    p('- 생성: %s · MATLAB %s\n- 모델: `Esm_cur.slx`\n- 덤프 수집: %s\n\n', R.when, R.matlab, meta.collected);
+    p('> 🔴 이 파일의 수는 전부 스크립트가 센 것이다. 수용 시험 결과는 `test_Esm_cur.m` 의 출력(실행 로그 `build.log` 의 `==== test_Esm_cur ====` 절)이 정본이다.\n\n');
+    p('## 1. 열기 + update\n\n- `set_param(''Esm_cur'',''SimulationCommand'',''update'')` → **%s**\n\n', R.update);
     p('## 2. compare_spec\n\n| 항목 | 값 |\n| --- | --- |\n');
     p('| 합계(total) | **%d** → %s |\n', R.compare.total, ternary(R.compare.ok, '통과', '실패'));
     if isfield(R.compare, 'chart')

@@ -1,24 +1,24 @@
-%% test_Esm.m — 공개 수용 시험 3개를 sim 으로 돌려 틱 단위로 대조하고 「통과 n/3」 을 낸다
+%% test_Esm_ruflo.m — 공개 수용 시험 3개를 sim 으로 돌려 틱 단위로 대조하고 「통과 n/3」 을 낸다
 %
-%   실행: build_Esm.m 다음에(모델이 로드돼 있지 않으면 Esm.slx 를 연다).
-%     matlab -wait -nosplash -batch "run('<OUT>\test_Esm.m')" -logfile <OUT>\test.log
+%   실행: build_Esm_ruflo.m 다음에(모델이 로드돼 있지 않으면 Esm_ruflo.slx 를 연다).
+%     matlab -wait -nosplash -batch "run('<OUT>\test_Esm_ruflo.m')" -logfile <OUT>\test.log
 %
 %   시험 입력은 t = 0 에 0 행(초기화 틱)을 앞에 붙여 k번째 틱을 t = k ms 에 넣는다.
 %   출력 대조는 t = 0(st=1·err=0·outEn=0) 과 t = 1..N ms 의 st·err·outEn 전부.
-%   시험 표는 Esm_사양.md §6 과 같다. 결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다.
+%   시험 표는 Esm_ruflo_사양.md §6 과 같다. 결과 폴더(OUT) 밖에는 아무것도 쓰지 않는다.
 
 OUT = fileparts(mfilename('fullpath'));
-MDL = 'Esm';
+MDL = 'Esm_ruflo';
 SLX = fullfile(OUT, [MDL '.slx']);
 
-fprintf('\n==== test_Esm ====\n');
+fprintf('\n==== test_Esm_ruflo ====\n');
 assert(isfolder(OUT), 'result folder not found: %s', OUT);
 cd(OUT);
 Simulink.fileGenControl('set', ...
     'CacheFolder',   fullfile(OUT, '_slprj'), ...
     'CodeGenFolder', fullfile(OUT, '_slprj'), 'createDir', true);
 if ~bdIsLoaded(MDL)
-    assert(isfile(SLX), 'Esm.slx not found — run build_Esm.m first');
+    assert(isfile(SLX), 'Esm_ruflo.slx not found — run build_Esm_ruflo.m first');
     load_system(SLX);
 end
 
@@ -77,7 +77,7 @@ for c = 1:numel(traj)
     m6 = z.req(k) == 0;                     F6 = all(~chg(m6)) && all(~(z.err(k(m6)) & ~z.err(k(m6)-1)));
     fprintf('  %s: F1=%d F2=%d F3=%d F4=%d F6=%d\n', z.name, F1, F2, F3, F4, F6);
 end
-fprintf('==== test_Esm done: 통과 %d/3 ====\n', nPass);
+fprintf('==== test_Esm_ruflo done: 통과 %d/3 ====\n', nPass);
 
 % ══════════════════════════════════════════════════════════════════════
 function y = simonce(MDL, t, reqIn, ackIn)

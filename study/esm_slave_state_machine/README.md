@@ -1,6 +1,8 @@
 # esm_slave_state_machine — EtherCAT 슬레이브 상태기, 세 체계 비교 (2026-09-17)
 
-같은 과제 문장을 세 에이전트 체계(**현행** = Claude Code + 볼트 규칙, **ruflo**, **ecc**)에 헤드리스로 주고, 각각이 만든 Stateflow 모델을 **숨은 입력 시퀀스로 채점**한 기록이다. 결과: 셋 다 숨은 시험 14/14·공개 3/3, 같은 설계로 수렴. 갈린 것은 배치(ruflo 세로 한 줄)와 비용뿐 → 그 배치 습관을 `_shared/harness/build/layout_chart.m` 로 옮겼다.
+같은 과제 문장을 세 에이전트 체계(**cur** = 현행 Claude Code + 볼트 규칙, **ruflo**, **ecc**)에 헤드리스로 주고, 각각이 만든 Stateflow 모델을 **숨은 입력 시퀀스로 채점**한 기록이다. 결과: 셋 다 숨은 시험 14/14·공개 3/3, 같은 설계로 수렴. 갈린 것은 배치(ruflo 세로 한 줄)와 비용뿐 → 그 배치 습관을 `_shared/harness/build/layout_chart.m` 로 옮겼다.
+
+**한 폴더에 나란히** — 파일 이름의 `_cur` · `_ruflo` · `_ecc` 가 어느 체계의 결과물인지 말한다(`_ref` 는 검증 세션이 채점기 자가검사용으로 만든 참조 모델). 모델 안의 이름도 파일과 같다(`Esm_cur` …).
 
 ## 과제 (요지)
 
@@ -9,32 +11,34 @@
 - 인터페이스 고정: Inport `req`(uint8)·`ack`(boolean), Outport `st`·`err`·`outEn`(= `st == 8`), 고정 스텝 1 ms. **t = 0 은 초기화 틱**(입력 무시, `st = 1`), k번째 입력은 t = k ms.
 - 틱 순서: ① `ack` → `err = 0` ② 요청 처리 ③ `outEn`.
 
-## 폴더
+## 파일
 
-| 폴더 | 내용 |
+| 파일 (× `_cur` `_ruflo` `_ecc`) | 내용 |
 | --- | --- |
-| `cur/` `ruflo/` `ecc/` | 각 체계의 결과물 — `build_Esm.m`(Stateflow API 로 재생성) · `test_Esm.m`(공개 시험 3) · `verify_Esm.m` · `Esm_사양.md`(전이표 형식 사양표) · `Esm.slx` · 검증 세션의 재채점 기록(`채점_공개.md` · `채점_숨은.md` · `독립측정.json`) |
-| `tests/` | 채점 도구 — `esm_ref.m`(규칙의 기준 구현, 순수 MATLAB) · `public_cases.m`(공개 3) · `gen_hidden.m`→`hidden_cases.mat`(숨은 14, 285틱) · `run_hidden.m`(모델을 `sim` 해 틱 단위 대조) · `measure_esm.m`(재빌드·API 계수·채점 일괄) |
-| `reference/` | 검증 세션이 채점기 자가검사용으로 만든 참조 모델 `build_check.m`(3/3·14/14, 가드를 뺀 오답 모델은 6/14) |
-| `models/` | 셋을 나란히 열기 위한 사본 `Esm_cur.slx`·`Esm_ruflo.slx`·`Esm_ecc.slx` + `open_all.m` |
-| `figures/` | Chart 그림 — `*_원본.png`(각 체계가 낸 배치) · `*_전.png`/`*_후.png`(`layout_chart` 적용 전/후) |
+| `build_Esm_<side>.m` | Stateflow API 로 `Esm_<side>.slx` 를 처음부터 재생성 |
+| `test_Esm_<side>.m` · `verify_Esm_<side>.m` | 각 체계가 만든 공개 시험(3)·검증(update · 덤프 · `compare_spec` · 이름 규칙) 스크립트 |
+| `Esm_<side>_사양.md` | 전이표 형식 사양표(그 체계의 설계) |
+| `Esm_<side>.slx` | 모델 |
+| `채점_공개_<side>.md` · `채점_숨은_<side>.md` · `독립측정_<side>.json` | 검증 세션의 재채점·API 계수 기록 |
+| `build_Esm_ref.m` · `Esm_ref.slx` · `채점_숨은_ref.md` | 참조 모델(3/3 · 14/14, 가드를 뺀 오답 모델은 6/14 로 잡힘) |
+| `open_all.m` | 네 모델을 나란히 연다 |
+| `tests/` | 채점 도구 — `esm_ref.m`(규칙의 기준 구현) · `public_cases.m` · `gen_hidden.m`→`hidden_cases.mat`(숨은 14, 285틱) · `run_hidden.m`(`sim` 틱 대조) · `measure_esm.m` |
+| `figures/` | Chart 그림 — `*_원본.png`(각 체계 배치) · `*_전.png`/`*_후.png`(`layout_chart` 전/후) |
 
 ## 돌려 보기
 
 ```matlab
-% 한 체계 재생성 + 공개 시험 (폴더 안에서)
-cd cur; build_Esm; test_Esm
-% 숨은 시험 채점 (어느 Esm.slx 든)
-addpath('../tests'); run_hidden('Esm.slx')            % 14/14 이면 규칙과 같다
-% 셋 나란히 보기
-run('../models/open_all.m')
+cd <이 폴더>
+build_Esm_ruflo; test_Esm_ruflo                 % 한 체계 재생성 + 공개 시험
+addpath tests; run_hidden('Esm_ruflo.slx')     % 숨은 시험 — 14/14 이면 규칙과 같다
+open_all                                        % 넷 나란히
 ```
 
-`verify_*.m` 은 `../../../_shared/harness`(덤프·`compare_spec`)를 절대 경로로 `addpath` 한다 — 다른 PC 에서는 그 줄만 고친다.
+`verify_*.m` 은 `_shared/harness`(덤프·`compare_spec`)를 절대 경로로 `addpath` 한다 — 다른 PC 에서는 그 줄만 고친다. 각 스크립트의 출력 폴더는 자기 위치(`fileparts(mfilename('fullpath'))`).
 
-## 결과 (검증 세션 재실행 값)
+## 결과 (검증 세션 재실행 값, 2026-09-18 새 이름으로 재확인)
 
-| | 현행 | ruflo | ecc |
+| | cur | ruflo | ecc |
 | --- | --- | --- | --- |
 | 숨은 14 / 공개 3 | 14 / 3 | 14 / 3 | 14 / 3 |
 | `compare_spec`(사양표 ↔ 모델) | 0 | 0 | 0 |
