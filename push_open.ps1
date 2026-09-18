@@ -21,7 +21,7 @@ $Src    = 'C:\Users\leeyj\matlab-work'
 $Mirror = 'C:\Users\leeyj\matlab-work-open'
 $Remote = 'https://github.com/genie4youu/matlab-work.git'
 $Allow  = Join-Path $Src 'open_allow.txt'
-$HardDeny = @('20260804', '_백업', '_분석출력', '_폐기', 'slprj', '_덤프', '*.slx.original', '*.zip', '*.sldd')
+$HardDeny = @('20260804', 'private', '_백업', '_분석출력', '_폐기', 'slprj', '_덤프', '*.slx.original', '*.zip', '*.sldd')
 # 회사 모델 고유명사 → 예시 이름 (공개 저장소에 회사 고유명사를 남기지 않는다 — AGENTS 「공개 글은 공개 출처로」)
 $Scrub = [ordered]@{
     'Example_Fault' = 'Example_Fault'

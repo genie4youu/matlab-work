@@ -43,8 +43,17 @@ matlab-work\
 │
 ├── adrc\                  ADRC 제어기
 ├── legacy-stateflow\      전임자 Stateflow 산출물
-└── _shared\               공용 유틸
+├── _shared\               공용 유틸 (harness\ = 덤프·전이표·사양표 대조·layout_chart)
+│
+├── study\                 🟢 공개 출처로 만든 연습 모델 — GitHub 공개 거울에 올라감 (2026-09-18)
+│   └── esm_slave_state_machine\   EtherCAT 슬레이브 상태기, 세 체계 비교 + 숨은 시험 채점
+├── private\               🔴 회사 자료에서 온 연습·비교 산출물 — 절대 안 올라감
+│   └── ecapp_master_lifecycle\
+├── open_allow.txt         공개 거울에 올릴 경로 목록 (여기 없는 것은 안 올라감)
+└── push_open.ps1          공개 거울 동기화 — GitHub genie4youu/matlab-work
 ```
+
+**공개 거울(2026-09-18):** 이 저장소는 원격이 없다(회사 모델 포함). GitHub `genie4youu/matlab-work` 는 `open_allow.txt` 의 경로(`_shared`·`study`·루트 스크립트)만 복사한 별도 저장소이고 `push_open.ps1` 로만 올린다 — 회사 폴더는 기본 거부, 회사 모델 이름은 예시 이름으로 치환, 남으면 push 가 막힌다. 직접 만든 모델은 `study/<과제>/` 에 두고 `open_allow.txt` 는 이미 `study` 를 품는다.
 
 **업무 하나 = 폴더 하나.** 볼트 `work/projects/` 규칙과 같게 맞췄다.
 

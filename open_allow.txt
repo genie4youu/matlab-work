@@ -11,3 +11,4 @@ open_allow.txt
 push_open.ps1
 .gitignore
 .gitattributes
+study
