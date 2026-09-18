@@ -45,14 +45,14 @@ matlab-work\
 ├── legacy-stateflow\      전임자 Stateflow 산출물
 ├── _shared\               공용 유틸 (harness\ = 덤프·전이표·사양표 대조·layout_chart)
 │
-├── results\               작업별 결과물 — 작업 하나 = 폴더 하나, 맨 위는 결과물만(slx·build·사양표 × _cur/_ruflo/_ecc), 보조는 _검증\·_그림\
+├── models\                작업별 결과물 — 작업 하나 = 폴더 하나, 맨 위는 결과물만(slx·build·사양표 × _cur/_ruflo/_ecc), 보조는 _검증\·_그림\
 │   ├── esm_slave_state_machine\   EtherCAT 슬레이브 상태기(공개 표준) — GitHub 공개 거울에 올라감
 │   └── ecapp_master_lifecycle\    EtherCAT 마스터 앱 수명주기(🔴 회사 C 발췌) — 안 올라감
-├── open_allow.txt         공개 거울에 올릴 경로 목록 (results\<과제> 를 한 줄씩. 여기 없는 것은 안 올라감)
+├── open_allow.txt         공개 거울에 올릴 경로 목록 (models\<과제> 를 한 줄씩. 여기 없는 것은 안 올라감)
 └── push_open.ps1          공개 거울 동기화 — GitHub genie4youu/matlab-work
 ```
 
-**공개 거울(2026-09-18):** 이 저장소는 원격이 없다(회사 모델 포함). GitHub `genie4youu/matlab-work` 는 `open_allow.txt` 의 경로(`_shared`·`results/<과제>`·루트 스크립트)만 복사한 별도 저장소이고 `push_open.ps1` 로만 올린다 — 목록에 없는 폴더는 기본 거부, 회사 모델 이름은 예시 이름으로 치환, 남으면 push 가 막힌다. 새 작업을 올리려면 `results/<과제>` 한 줄을 목록에 더한다(회사 자료에서 온 작업은 적지 않는다).
+**공개 거울(2026-09-18):** 이 저장소는 원격이 없다(회사 모델 포함). GitHub `genie4youu/matlab-work` 는 `open_allow.txt` 의 경로(`_shared`·`models/<과제>`·루트 스크립트)만 복사한 별도 저장소이고 `push_open.ps1` 로만 올린다 — 목록에 없는 폴더는 기본 거부, 회사 모델 이름은 예시 이름으로 치환, 남으면 push 가 막힌다. 새 작업을 올리려면 `models/<과제>` 한 줄을 목록에 더한다(회사 자료에서 온 작업은 적지 않는다).
 
 **업무 하나 = 폴더 하나.** 볼트 `work/projects/` 규칙과 같게 맞췄다.
 

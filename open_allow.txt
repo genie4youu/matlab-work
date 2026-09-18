@@ -1,7 +1,7 @@
 # open_allow.txt — GitHub genie4youu/matlab-work (공개 거울) 에 올릴 경로 목록. push_open.ps1 이 읽는다.
 # 한 줄에 경로 하나(matlab-work 기준 상대 경로, 폴더는 끝에 / 없이). # 로 시작하면 주석.
 # 🔴 기본 거부: 여기 없는 것은 절대 안 올라간다. 회사 모델 폴더(20260804 등)는 적지 않는다 — 스크립트가 이름으로도 막는다.
-# 올릴 작업은 results/<과제> 를 한 줄씩 적는다(results 통째로 적지 않는다). 회사 자료에서 온 작업은 적지 않는다.
+# 올릴 작업은 models/<과제> 를 한 줄씩 적는다(models 통째로 적지 않는다). 회사 자료에서 온 작업은 적지 않는다.
 _shared
 sessions/_README.md
 README.md
@@ -11,4 +11,4 @@ open_allow.txt
 push_open.ps1
 .gitignore
 .gitattributes
-results/esm_slave_state_machine
+models/esm_slave_state_machine
