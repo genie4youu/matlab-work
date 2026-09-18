@@ -67,6 +67,12 @@ foreach ($e in $entries) {
         $copied += $rel
     }
 }
+# 1b. 거울에 남은 캐시·진단 로그 제거 (/MIR 은 /XD·/XF 로 제외한 것을 목적지에서 지우지 않는다)
+Get-ChildItem $Mirror -Recurse -Force -Directory | Where-Object { $_.FullName -notlike "$Mirror\.git\*" -and $_.Name -match '^(slprj|_slprj|_덤프.*|_백업)$' } |
+    ForEach-Object { Remove-Item -Recurse -Force $_.FullName -ErrorAction SilentlyContinue }
+Get-ChildItem $Mirror -Recurse -Force -File | Where-Object { $_.FullName -notlike "$Mirror\.git\*" -and $_.Name -match '^(build|update)_diag.*\.log$' } |
+    ForEach-Object { Remove-Item -Force $_.FullName -ErrorAction SilentlyContinue }
+
 # 2. 거울 안내 파일
 $note = @(
     '# matlab-work (open mirror)',
