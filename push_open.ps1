@@ -21,7 +21,7 @@ $Src    = 'C:\Users\leeyj\matlab-work'
 $Mirror = 'C:\Users\leeyj\matlab-work-open'
 $Remote = 'https://github.com/genie4youu/matlab-work.git'
 $Allow  = Join-Path $Src 'open_allow.txt'
-$HardDeny = @('20260804', 'private', '_백업', '_분석출력', '_폐기', 'slprj', '_덤프', '*.slx.original', '*.zip', '*.sldd')
+$HardDeny = @('20260804', 'results\ecapp_master_lifecycle', '_백업', '_분석출력', '_폐기', 'slprj', '_덤프', '*.slx.original', '*.zip', '*.sldd')
 # 회사 모델 고유명사 → 예시 이름 (공개 저장소에 회사 고유명사를 남기지 않는다 — AGENTS 「공개 글은 공개 출처로」)
 $Scrub = [ordered]@{
     'Example_Fault' = 'Example_Fault'
@@ -66,6 +66,12 @@ foreach ($e in $entries) {
         Copy-Item $from $to -Force
         $copied += $rel
     }
+}
+# 1a. 거울에서 허용 목록 밖의 최상위 폴더 제거 (옛 배치 잔재)
+foreach ($d in Get-ChildItem $Mirror -Directory | Where-Object { $_.Name -ne '.git' }) {
+    $top = $d.Name
+    $inAllow = @($entries | ForEach-Object { $_ -replace '/', '\' } | Where-Object { $_ -eq $top -or $_.StartsWith($top + '\') }).Count -gt 0
+    if (-not $inAllow) { Remove-Item -Recurse -Force $d.FullName; Write-Host "  - 거울에서 제거: $top\" -ForegroundColor Yellow }
 }
 # 1b. 거울에 남은 캐시·진단 로그 제거 (/MIR 은 /XD·/XF 로 제외한 것을 목적지에서 지우지 않는다)
 Get-ChildItem $Mirror -Recurse -Force -Directory | Where-Object { $_.FullName -notlike "$Mirror\.git\*" -and $_.Name -match '^(slprj|_slprj|_덤프.*|_백업)$' } |
