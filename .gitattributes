@@ -1,0 +1,70 @@
+# matlab-work — git 속성
+#
+# 왜 필요한가
+# ──────────
+# .slx 는 zip 이고 .sldd 는 내부 엔트리가 deflate 압축이다. git 이 이것을
+# 텍스트로 오해하면 ① 줄바꿈을 변환해 파일을 깨뜨리고 ② 병합을 시도해
+# 복구 불가능한 상태를 만든다. 깨진 .slx 는 열 때까지 드러나지 않는다.
+#
+# 병합 전략
+# ────────
+# 바이너리는 `merge=binary` 로 두어 충돌 시 자동 병합을 시도하지 않게 한다.
+# 모델은 손으로 고르는 수밖에 없다 (visdiff / slxmlcomp.compare 로 비교).
+
+# ── Simulink / Stateflow 모델 ─────────────────────────
+*.slx       binary merge=binary
+*.slxp      binary merge=binary
+*.mdl       -text  merge=binary
+*.mdlp      binary merge=binary
+
+# ── 데이터 딕셔너리 · 데이터 ──────────────────────────
+*.sldd      binary merge=binary
+*.mat       binary merge=binary
+
+# ── 라이브 스크립트 · 앱 · 프로젝트 ───────────────────
+*.mlx       binary merge=binary
+*.mlapp     binary merge=binary
+*.slxc      binary merge=binary
+*.mldatx    binary merge=binary
+*.slreqx    binary merge=binary
+*.sltx      binary merge=binary
+
+# ── 컴파일 산출물 (대부분 .gitignore 로 빠지지만 안전망) ──
+*.p         binary
+*.mex*      binary
+*.mexw64    binary
+
+# ── 첫 커밋에서 놓쳐 CRLF 변환된 것들 (2026-09-07) ────
+#    .cvt 는 Simulink Coverage 데이터 바이너리인데 여기 없어서 텍스트로
+#    처리됐다. 깨진 바이너리는 checkout 할 때까지 드러나지 않는다.
+*.cvt       binary
+*.zip       binary
+*.old       binary merge=binary
+*.bak       binary
+*.bak-*     binary
+*.gif       binary
+*.png       binary
+*.jpg       binary
+*.pdf       binary
+*.pptx      binary
+*.docx      binary
+*.xlsx      binary
+
+# ── 텍스트 ────────────────────────────────────────────
+#    MATLAB 은 Windows 에서 CRLF 를 기대한다. 원격이 없으므로
+#    eol 을 crlf 로 고정해 두는 편이 도구 간 혼선이 적다.
+*.m         text eol=crlf
+*.c         text eol=crlf
+*.h         text eol=crlf
+*.md        text eol=crlf
+*.json      text eol=crlf
+*.txt       text eol=crlf
+*.csv       text eol=crlf
+*.xml       text eol=crlf
+*.ps1       text eol=crlf
+*.cmd       text eol=crlf
+
+# ── diff 표시 ─────────────────────────────────────────
+#    바이너리라 diff 는 안 나오지만, 커밋 목록에서 무엇이 바뀌었는지는 보인다.
+*.slx       diff=slx
+*.sldd      diff=sldd
