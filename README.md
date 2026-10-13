@@ -43,6 +43,7 @@ matlab-work\
 │
 ├── adrc\                  ADRC 제어기
 ├── legacy-stateflow\      전임자 Stateflow 산출물
+├── legacy-codegen\        원본 PC 에서 반입한 생성 코드 묶음 (2025-2026\ = 2025-01~2026-05 GRT·ERT, README.md 동봉) — git 제외, 325개 경로가 260자 초과
 ├── _shared\               공용 유틸 (harness\ = 덤프·전이표·사양표 대조·layout_chart)
 │
 ├── models\                작업별 결과물 — 작업 하나 = 폴더 하나, 맨 위는 결과물만(slx·build·사양표 × _cur/_ruflo/_ecc), 보조는 _검증\·_그림\

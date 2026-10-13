@@ -182,7 +182,7 @@ function varargout = build(dateStr, varargin)
         for i = 1:numel(rep.warn), fprintf('    ⚠ %s\n', rep.warn{i}); end
     end
 
-    fprintf('\n  다음: 덤프 JSON 을 에이전트에게 병렬로 읽힌다 (`/model`).\n');
+    fprintf('\n  다음: 덤프 JSON 을 에이전트에게 병렬로 읽힌다 (`/model-review`).\n');
     fprintf('        MATLAB 은 메인만 만진다 — MCP 는 세션 하나에 붙으므로 병렬이 안 된다.\n\n');
 
     ok = true;

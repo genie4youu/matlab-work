@@ -53,3 +53,6 @@ _덤프_독립/
 _덤프_*/
 build_diag_*.log
 update_diag_*.log
+
+# 반입 생성 코드 묶음 — 원본 PC 에서 가져온 참조 자료, 400 MB·경로 260자 초과 포함 (2026-10-02)
+legacy-codegen/
