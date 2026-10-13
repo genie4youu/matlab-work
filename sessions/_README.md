@@ -62,5 +62,5 @@ session
 
 ---
 
-- 매일 절차: `Documents\yj.lee\work\knowledge\AI도구_작업환경_시작순서.md`
-- 설정 근거·트러블슈팅: `Documents\yj.lee\work\knowledge\MATLAB_MCP_연결_구축기록.md`
+- 매일 절차: `Documents\yj.lee\work\knowledge\dev_env\AI도구_작업환경_시작순서.md`
+- 설정 근거·트러블슈팅: `Documents\yj.lee\work\knowledge\dev_env\MATLAB_MCP_연결_구축기록.md`

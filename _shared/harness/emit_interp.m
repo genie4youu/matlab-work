@@ -36,7 +36,7 @@ function emit_interp(p, keep, num)
     p('### %d.3 숫자의 근거\n\n', num);
     p('<!-- | 수치 | 어디서 나왔나 | 무엇을 뜻하는가 |  숫자가 없으면 「해당 없음」이라고 쓴다 -->\n\n');
     p('### %d.4 이 문서에 나온 용어\n\n', num);
-    p('<!-- | 용어 | 한 줄 뜻 | [[work/knowledge/Simulink_모델읽는법]] 또는 [[work/knowledge/Stateflow_읽는법]] 링크 | -->\n\n');
+    p('<!-- | 용어 | 한 줄 뜻 | [[work/knowledge/simulink_stateflow/Simulink_모델읽는법]] 또는 [[work/knowledge/simulink_stateflow/Stateflow_읽는법]] 링크 | -->\n\n');
     p('### %d.5 근거와 미확인\n\n', num);
     p('<!-- 확인한 것: 어떤 명령의 출력인가 / 미확인: 모델만으로는 알 수 없는 것 -->\n\n');
 end

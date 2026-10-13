@@ -97,4 +97,4 @@ powershell -ExecutionPolicy Bypass -File C:\Users\leeyj\matlab-work\start-sessio
 > 읽은 게 많아질수록 *"그냥 내가 아는 일반 원리"* 로 착각할 여지도 같이 커진다.
 
 - 발행 규칙: `Documents\yj.lee\CLAUDE.md` 의 Zone 규칙
-- 시작 순서 매뉴얼: `Documents\yj.lee\work\knowledge\AI도구_작업환경_시작순서.md`
+- 시작 순서 매뉴얼: `Documents\yj.lee\work\knowledge\dev_env\AI도구_작업환경_시작순서.md`

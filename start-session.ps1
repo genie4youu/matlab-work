@@ -8,7 +8,7 @@
                                     (한 데스크톱을 여럿이 쓰므로 실행 담당 한 명, -Resource matlab 잠금)
       · 이 스크립트를 안 눌렀다     → Claude/Codex 세션마다 자기 MATLAB 을 창 없이 띄운다(MCP auto 모드) → 병렬
       · 시작 메뉴 · VS Code 확장 · matlab -batch 로 뜬 MATLAB → 공유 안 됨
-      근거·실측: 볼트 work/knowledge/결정이력 2026-09-16 절, work/knowledge/AI도구_작업환경_시작순서 §A
+      근거·실측: 볼트 work/knowledge/vault_ops/결정이력 2026-09-16 절, work/knowledge/dev_env/AI도구_작업환경_시작순서 §A
 
     실행:  더블클릭 start-session.cmd  또는  & C:\Users\leeyj\matlab-work\start-session.ps1
     옵션:  -NoLaunch   점검만 하고 MATLAB 은 띄우지 않는다

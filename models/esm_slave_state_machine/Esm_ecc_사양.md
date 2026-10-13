@@ -2,7 +2,7 @@
 
 - 대상: `Esm_ecc`
 - 원본: ETG.1000.6 AL 상태기(공개 규격)의 네 상태 — Init(코드 1) · Pre-Operational(2) · Safe-Operational(4) · Operational(8) — 와 허용 전이 9개(1→2 · 2→1 · 2→4 · 4→1 · 4→2 · 4→8 · 8→1 · 8→2 · 8→4). 여기에 과제가 정한 **오류 표시/해제** 규칙(아래 「틱 규칙」)을 더했다. 이 표가 정본이고 `Esm_ecc.slx` 는 구현이다.
-- 형식: [[work/knowledge/볼트운영/모델저작_규칙]] §2 — `emit_transtable` 의 `전이표.md` 와 같은 절·표 + §0·§5·§6. 표 칸 안의 `|` 는 `\|`.
+- 형식: [[work/knowledge/vault_ops/rules/모델저작_규칙]] §2 — `emit_transtable` 의 `전이표.md` 와 같은 절·표 + §0·§5·§6. 표 칸 안의 `|` 는 `\|`.
 - 이름 규칙: Chart 데이터·이벤트 ≤ 8자 · State ≤ 12자 · Transition 라벨·State Action 한 줄 ≤ 40자.
 - 시간: 고정 스텝 이산, 스텝 1 ms. **t = 0 은 초기화 틱**이다 — 입력을 보지 않고 Chart 가 `Al.Init` 에 들어가며 `st = 1 · err = 0 · outEn = 0` 을 낸다. 시험 입력의 k번째 틱은 t = k ms 에 들어가고 그 틱의 출력은 t = k ms 값이다.
 

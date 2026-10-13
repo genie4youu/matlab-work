@@ -1,7 +1,7 @@
 # 사양표 — Esm
 
 - 대상: `Esm_ruflo`
-- 형식: [[work/knowledge/볼트운영/모델저작_규칙]] §2 — `emit_transtable` 의 전이표와 같은 절·표 + 사양 전용 절(§0 인터페이스 · §5 금지 조건 · §6 수용 시험)
+- 형식: [[work/knowledge/vault_ops/rules/모델저작_규칙]] §2 — `emit_transtable` 의 전이표와 같은 절·표 + 사양 전용 절(§0 인터페이스 · §5 금지 조건 · §6 수용 시험)
 - 출처: ETG.1000.6 AL 상태기의 네 상태 Init(1) · Pre-Operational(2) · Safe-Operational(4) · Operational(8) 와 허용 전이 1→2 · 2→1 · 2→4 · 4→1 · 4→2 · 4→8 · 8→1 · 8→2 · 8→4. 오류 표시(`err`)/해제(`ack`) 규칙은 이 과제(2026-09-17)가 정한 것이다
 - 모델 밖: Bootstrap(3) · AL Status Code · 상태별 SM/PDO 설정 검사 — 요청 코드의 합법성만 본다
 
